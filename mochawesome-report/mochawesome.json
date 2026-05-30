@@ -1,0 +1,178 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-05-30T23:22:29.738Z",
+    "end": "2026-05-30T23:22:29.746Z",
+    "duration": 8,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "22af9529-3280-4900-bfc5-206738217199",
+      "title": "",
+      "fullFile": "C:\\Projetos-QA-Pos\\CALCULAR-PAGAMENTO\\test\\transferenciaPagamento.test.js",
+      "file": "\\test\\transferenciaPagamento.test.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [
+        {
+          "title": "Validar que a consulta traz todos os pagamentos realizados",
+          "fullTitle": "Validar que a consulta traz todos os pagamentos realizados",
+          "timedOut": false,
+          "duration": 1,
+          "state": "passed",
+          "speed": "fast",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "//Arrange\nconst servicoDePagamento = new ServicoDePagamento();\n//Act\nservicoDePagamento.pagar(\"0001-2345-6789\", \"Agua\", 90.99);\nservicoDePagamento.pagar(\"0002-3456-7890\", \"Luz\", 100.09);\nservicoDePagamento.pagar(\"0003-4567-8910\", \"Convenio\", 600.5);\nconst pagamentos = servicoDePagamento.consultarPagamentos();\n//Assert\nassert.deepEqual(pagamentos, [\n  {\n    codigoBarras: \"0001-2345-6789\",\n    empresa: \"Agua\",\n    valor: 90.99,\n    categoria: \"padrão\",\n  },\n  {\n    codigoBarras: \"0002-3456-7890\",\n    empresa: \"Luz\",\n    valor: 100.09,\n    categoria: \"cara\",\n  },\n  {\n    codigoBarras: \"0003-4567-8910\",\n    empresa: \"Convenio\",\n    valor: 600.5,\n    categoria: \"cara\",\n  },\n]);",
+          "err": {},
+          "uuid": "93e844ba-5a31-43ea-8ec3-f67f2b9b93ad",
+          "parentUUID": "22af9529-3280-4900-bfc5-206738217199",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Validar que a consulta traz apenas o último pagamento",
+          "fullTitle": "Validar que a consulta traz apenas o último pagamento",
+          "timedOut": false,
+          "duration": 1,
+          "state": "passed",
+          "speed": "fast",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "// Arrange\nconst servicoDePagamento = new ServicoDePagamento();\n// Act\nservicoDePagamento.pagar(\"0001-2345-6789\", \"Agua\", 100.01);\nservicoDePagamento.pagar(\"0002-3456-7890\", \"Luz\", 100.09);\nservicoDePagamento.pagar(\"0003-4567-8910\", \"Convenio\", 600.5);\nconst pagamento = servicoDePagamento.consultarUltimoPagamento();\n// Assert\nassert.deepEqual(pagamento, {\n  codigoBarras: \"0003-4567-8910\",\n  empresa: \"Convenio\",\n  valor: 600.5,\n  categoria: \"cara\",\n});",
+          "err": {},
+          "uuid": "b82400f1-9c4f-4ea3-8326-18b52c670ef0",
+          "parentUUID": "22af9529-3280-4900-bfc5-206738217199",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Validar que a consulta traz um array vazio quando não há pagamentos realizados",
+          "fullTitle": "Validar que a consulta traz um array vazio quando não há pagamentos realizados",
+          "timedOut": false,
+          "duration": 0,
+          "state": "passed",
+          "speed": "fast",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "//Arrange\nconst servicoDePagamento = new ServicoDePagamento();\n//Act\nconst pagamentos = servicoDePagamento.consultarPagamentos();\n//Assert\nassert.deepEqual(pagamentos, []);",
+          "err": {},
+          "uuid": "7ea6a293-f33e-40e9-b85c-3071e21c85f0",
+          "parentUUID": "22af9529-3280-4900-bfc5-206738217199",
+          "isHook": false,
+          "skipped": false
+        }
+      ],
+      "suites": [
+        {
+          "uuid": "9bbca47d-3f5d-4c3f-ba0f-446437ca1000",
+          "title": "Validar ações do serviço de transferência bancária",
+          "fullFile": "C:\\Projetos-QA-Pos\\CALCULAR-PAGAMENTO\\test\\transferenciaPagamento.test.js",
+          "file": "\\test\\transferenciaPagamento.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Validar que a categoria do pagamento é cara quando o valor é maior que 100.00",
+              "fullTitle": "Validar ações do serviço de transferência bancária Validar que a categoria do pagamento é cara quando o valor é maior que 100.00",
+              "timedOut": false,
+              "duration": 1,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Arrange\nconst servicoDePagamento = new ServicoDePagamento();\n// Act\nservicoDePagamento.pagar(\"0002-3456-7890\", \"Luz\", 100.01);\nconst pagamento = servicoDePagamento.consultarUltimoPagamento();\n// Assert\nassert.equal(pagamento.empresa, \"Luz\");\nassert.equal(pagamento.valor, 100.01);\nassert.equal(pagamento.categoria, \"cara\");",
+              "err": {},
+              "uuid": "5bed07b0-1b30-42eb-8295-14b971983bf9",
+              "parentUUID": "9bbca47d-3f5d-4c3f-ba0f-446437ca1000",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Validar que a categoria do pagamento é padrão quando o valor é menor ou igual a 100.00",
+              "fullTitle": "Validar ações do serviço de transferência bancária Validar que a categoria do pagamento é padrão quando o valor é menor ou igual a 100.00",
+              "timedOut": false,
+              "duration": 0,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Arrange\nconst servicoDePagamento = new ServicoDePagamento();\n// Act\nservicoDePagamento.pagar(\"0001-2345-6789\", \"Agua\", 100.0);\nconst pagamento = servicoDePagamento.consultarUltimoPagamento();\n// Assert\nassert.deepEqual(pagamento, {\n  codigoBarras: \"0001-2345-6789\",\n  empresa: \"Agua\",\n  valor: 100.0,\n  categoria: \"padrão\",\n});",
+              "err": {},
+              "uuid": "ff79a348-9ed8-4168-a853-d420b0d7362c",
+              "parentUUID": "9bbca47d-3f5d-4c3f-ba0f-446437ca1000",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "5bed07b0-1b30-42eb-8295-14b971983bf9",
+            "ff79a348-9ed8-4168-a853-d420b0d7362c"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [
+        "93e844ba-5a31-43ea-8ec3-f67f2b9b93ad",
+        "b82400f1-9c4f-4ea3-8326-18b52c670ef0",
+        "7ea6a293-f33e-40e9-b85c-3071e21c85f0"
+      ],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 2,
+      "root": true,
+      "rootEmpty": false,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "11.7.6"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.3.2"
+    }
+  }
+}
